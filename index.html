@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Capstone Grading System</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <script>
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("open");
+    }
+  </script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -35,7 +40,6 @@
       overflow-x: hidden;
     }
 
-    /* Background mesh */
     body::before {
       content: '';
       position: fixed;
@@ -51,11 +55,14 @@
     header {
       position: relative;
       z-index: 10;
-      padding: 28px 40px 0;
+      padding: 22px 24px 0;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 14px;
     }
+
+    .header-left { display: flex; align-items: center; gap: 14px; }
 
     .logo-mark {
       width: 42px; height: 42px;
@@ -85,26 +92,45 @@
       text-transform: uppercase;
     }
 
+    /* ─── MOBILE TOGGLE ─── */
+    .sidebar-toggle {
+      display: none;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      padding: 8px 12px;
+      font-size: 12px;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      gap: 6px;
+      align-items: center;
+    }
+
     /* ─── MAIN LAYOUT ─── */
     .layout {
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: 320px 1fr;
-      gap: 24px;
+      grid-template-columns: 300px 1fr;
+      gap: 20px;
       max-width: 1100px;
-      margin: 28px auto 40px;
-      padding: 0 24px;
+      margin: 24px auto 40px;
+      padding: 0 20px;
     }
 
     /* ─── SIDEBAR ─── */
-    .sidebar { display: flex; flex-direction: column; gap: 16px; }
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
 
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 22px;
+      padding: 20px;
       transition: border-color 0.2s;
     }
     .card:hover { border-color: #303550; }
@@ -116,7 +142,7 @@
       letter-spacing: 1.4px;
       text-transform: uppercase;
       color: var(--text-muted);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -129,7 +155,7 @@
       border-radius: 2px;
     }
 
-    /* ─── STUDENT SELECT ─── */
+    /* ─── SELECT ─── */
     .select-wrapper { position: relative; }
 
     select {
@@ -159,7 +185,7 @@
     }
 
     /* ─── INPUTS ─── */
-    .form-group { margin-bottom: 12px; }
+    .form-group { margin-bottom: 11px; }
 
     .form-group label {
       display: block;
@@ -167,7 +193,7 @@
       font-weight: 500;
       color: var(--text-soft);
       letter-spacing: 0.4px;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
       text-transform: uppercase;
     }
 
@@ -180,7 +206,7 @@
       color: var(--text);
       font-family: 'DM Sans', sans-serif;
       font-size: 14px;
-      padding: 10px 14px;
+      padding: 9px 14px;
       outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
@@ -190,7 +216,7 @@
     /* ─── BUTTONS ─── */
     .btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 7px;
-      padding: 10px 18px;
+      padding: 9px 16px;
       border: none;
       border-radius: var(--radius-sm);
       font-family: 'DM Sans', sans-serif;
@@ -214,32 +240,56 @@
       background: rgba(248,113,113,0.1);
       color: var(--danger);
       border: 1px solid rgba(248,113,113,0.2);
-      padding: 5px 12px;
+      padding: 5px 10px;
       font-size: 12px;
     }
     .btn-danger:hover { background: rgba(248,113,113,0.18); }
 
+    .btn-warning {
+      background: rgba(251,191,36,0.1);
+      color: var(--warning);
+      border: 1px solid rgba(251,191,36,0.2);
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+    .btn-warning:hover { background: rgba(251,191,36,0.18); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { background: var(--surface2); color: var(--text); }
+
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .btn-row .btn-primary { flex: 1; width: auto; }
+
     /* ─── MAIN CONTENT ─── */
-    .main { display: flex; flex-direction: column; gap: 16px; }
+    .main { display: flex; flex-direction: column; gap: 14px; }
 
     /* ─── STUDENT INFO BAR ─── */
     .student-bar {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 18px 24px;
+      padding: 16px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
     .student-info {
-      display: flex; align-items: center; gap: 14px;
+      display: flex; align-items: center; gap: 12px;
     }
 
     .avatar {
-      width: 44px; height: 44px;
+      width: 42px; height: 42px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       display: flex; align-items: center; justify-content: center;
@@ -252,7 +302,7 @@
 
     .student-details h3 {
       font-family: 'Syne', sans-serif;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       color: var(--text);
     }
@@ -262,7 +312,13 @@
       margin-top: 2px;
     }
 
-    /* ─── GWA BADGE ─── */
+    .bar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
     .gwa-display {
       display: flex;
       flex-direction: column;
@@ -280,7 +336,7 @@
 
     .gwa-value {
       font-family: 'Syne', sans-serif;
-      font-size: 32px;
+      font-size: 30px;
       font-weight: 800;
       line-height: 1;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
@@ -294,10 +350,51 @@
       font-weight: 500;
       padding: 2px 9px;
       border-radius: 99px;
-      margin-top: 4px;
+      margin-top: 3px;
     }
 
-    /* ─── SUBJECTS TABLE ─── */
+    .bar-actions {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    /* ─── STATS ROW ─── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-card .stat-val {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .stat-card .stat-lbl {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .stat-card .stat-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      margin-bottom: 4px;
+    }
+
+    /* ─── TABLE ─── */
     .table-wrapper {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -309,7 +406,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 18px 22px 14px;
+      padding: 16px 20px 12px;
       border-bottom: 1px solid var(--border);
     }
 
@@ -329,14 +426,15 @@
       padding: 2px 10px;
     }
 
+    .table-scroll { overflow-x: auto; }
+
     table {
       width: 100%;
       border-collapse: collapse;
+      min-width: 400px;
     }
 
-    thead tr {
-      background: var(--surface2);
-    }
+    thead tr { background: var(--surface2); }
 
     th {
       font-family: 'Syne', sans-serif;
@@ -345,7 +443,7 @@
       letter-spacing: 1px;
       text-transform: uppercase;
       color: var(--text-muted);
-      padding: 11px 18px;
+      padding: 10px 16px;
       text-align: left;
       border-bottom: 1px solid var(--border);
     }
@@ -353,7 +451,7 @@
     th:last-child { text-align: right; }
 
     td {
-      padding: 13px 18px;
+      padding: 11px 16px;
       font-size: 14px;
       color: var(--text);
       border-bottom: 1px solid rgba(37,42,56,0.6);
@@ -361,15 +459,10 @@
     }
 
     tbody tr:last-child td { border-bottom: none; }
-
-    tbody tr {
-      transition: background 0.15s;
-    }
+    tbody tr { transition: background 0.15s; }
     tbody tr:hover { background: rgba(255,255,255,0.02); }
 
-    .subject-name {
-      font-weight: 500;
-    }
+    .subject-name { font-weight: 500; }
 
     .units-badge {
       display: inline-block;
@@ -384,7 +477,7 @@
 
     .grade-input-wrap {
       position: relative;
-      width: 90px;
+      width: 80px;
     }
 
     .grade-input-wrap input {
@@ -395,7 +488,7 @@
       font-family: 'Syne', sans-serif;
       font-size: 14px;
       font-weight: 600;
-      padding: 7px 10px;
+      padding: 6px 8px;
       width: 100%;
       text-align: center;
       transition: border-color 0.15s, box-shadow 0.15s;
@@ -406,23 +499,16 @@
     }
 
     .td-action { text-align: right; }
-
-    /* ─── GRADE COLOR CHIPS ─── */
-    .grade-chip {
-      display: inline-block;
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      margin-right: 5px;
-    }
+    .td-action-inner { display: flex; gap: 6px; justify-content: flex-end; }
 
     /* ─── EMPTY STATE ─── */
     .empty-state {
-      padding: 52px 24px;
+      padding: 48px 24px;
       text-align: center;
     }
     .empty-state .empty-icon {
-      font-size: 40px;
-      margin-bottom: 12px;
+      font-size: 38px;
+      margin-bottom: 10px;
       opacity: 0.4;
     }
     .empty-state p {
@@ -430,57 +516,65 @@
       color: var(--text-muted);
     }
 
-    /* ─── ADD SUBJECT INLINE ─── */
-    .add-subject-row td {
-      padding: 10px 18px !important;
-      border-bottom: none !important;
-      background: rgba(79,142,247,0.04);
+    /* ─── MODAL ─── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
     }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
 
-    /* ─── STATS ROW ─── */
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-
-    .stat-card {
+    .modal {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 16px 18px;
+      padding: 26px;
+      width: 100%;
+      max-width: 420px;
+      transform: translateY(20px);
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .modal-overlay.open .modal { transform: translateY(0); }
+
+    .modal-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 20px;
       display: flex;
-      flex-direction: column;
-      gap: 4px;
+      align-items: center;
+      gap: 8px;
     }
 
-    .stat-card .stat-val {
-      font-family: 'Syne', sans-serif;
-      font-size: 24px;
-      font-weight: 800;
-      color: var(--text);
-    }
-    .stat-card .stat-lbl {
+    .modal-form-group { margin-bottom: 12px; }
+    .modal-form-group label {
+      display: block;
       font-size: 11px;
-      color: var(--text-muted);
+      font-weight: 500;
+      color: var(--text-soft);
+      letter-spacing: 0.4px;
+      margin-bottom: 5px;
       text-transform: uppercase;
-      letter-spacing: 0.8px;
-    }
-    .stat-card .stat-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      margin-bottom: 6px;
     }
 
     /* ─── TOAST ─── */
     #toast {
       position: fixed;
-      bottom: 32px;
-      right: 32px;
+      bottom: 24px;
+      right: 24px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
-      padding: 12px 18px;
+      padding: 11px 16px;
       font-size: 13px;
       color: var(--text);
       box-shadow: 0 8px 24px rgba(0,0,0,0.4);
@@ -491,37 +585,71 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      max-width: calc(100vw - 48px);
     }
     #toast.show { transform: translateY(0); opacity: 1; }
 
-    /* ─── DIVIDER ─── */
-    .divider {
-      height: 1px;
-      background: var(--border);
-      margin: 4px 0;
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 820px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 0;
+        margin-top: 16px;
+      }
+
+      .sidebar {
+        display: none;
+        margin-bottom: 16px;
+      }
+      .sidebar.open { display: flex; }
+
+      .sidebar-toggle {
+        display: flex;
+      }
+
+      header { padding: 16px 16px 0; }
+      .layout { padding: 0 14px; }
+
+      .student-bar { padding: 14px 16px; }
+      .gwa-value { font-size: 26px; }
+      .stats-row { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .stat-card { padding: 12px 12px; }
+      .stat-card .stat-val { font-size: 18px; }
     }
 
-    @media (max-width: 760px) {
-      .layout { grid-template-columns: 1fr; padding: 0 14px; }
-      header { padding: 18px 20px 0; }
-      .stats-row { grid-template-columns: repeat(2,1fr); }
+    @media (max-width: 480px) {
+      .stats-row { grid-template-columns: repeat(3,1fr); }
+      .bar-right { justify-content: flex-start; width: 100%; }
+      .student-bar { flex-direction: column; align-items: flex-start; }
+      .gwa-display { align-items: flex-start; }
+      .bar-actions .btn { font-size: 11px; padding: 4px 8px; }
+      header { padding: 14px 14px 0; }
+      .layout { padding: 0 12px; }
+      .card { padding: 16px; }
+      td, th { padding: 10px 12px; }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <div class="logo-mark">GS</div>
-  <div class="header-title">
-    <h1>Grading System</h1>
-    <p>Capstone Project · GWA Tracker</p>
+  <div class="header-left">
+    <div class="logo-mark">GS</div>
+    <div class="header-title">
+      <h1>Grading System</h1>
+      <p>Capstone · GWA Tracker</p>
+    </div>
   </div>
+  <button class="sidebar-toggle" onclick="toggleSidebar()">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    Menu
+  </button>
 </header>
 
 <div class="layout">
 
   <!-- ─── SIDEBAR ─── -->
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
 
     <div class="card">
       <div class="card-label">Select Student</div>
@@ -542,7 +670,7 @@
         <label>Section</label>
         <input type="text" id="section" placeholder="e.g. BSCS-4A">
       </div>
-      <div class="form-group" style="margin-bottom:16px">
+      <div class="form-group" style="margin-bottom:14px">
         <label>Course</label>
         <input type="text" id="course" placeholder="e.g. BSCS">
       </div>
@@ -558,7 +686,7 @@
         <label>Subject Name</label>
         <input type="text" id="subject" placeholder="e.g. Capstone 1">
       </div>
-      <div class="form-group" style="margin-bottom:16px">
+      <div class="form-group" style="margin-bottom:14px">
         <label>Units</label>
         <input type="number" id="units" placeholder="e.g. 3" min="1" max="6">
       </div>
@@ -573,7 +701,6 @@
   <!-- ─── MAIN ─── -->
   <main class="main">
 
-    <!-- Student bar -->
     <div class="student-bar" id="studentBar" style="display:none">
       <div class="student-info">
         <div class="avatar" id="avatarInitial">—</div>
@@ -582,14 +709,25 @@
           <p id="barMeta">—</p>
         </div>
       </div>
-      <div class="gwa-display">
-        <span class="gwa-label">GWA</span>
-        <span class="gwa-value" id="gwa">—</span>
-        <span class="gwa-remark" id="gwaRemark"></span>
+      <div class="bar-right">
+        <div class="gwa-display">
+          <span class="gwa-label">GWA</span>
+          <span class="gwa-value" id="gwa">—</span>
+          <span class="gwa-remark" id="gwaRemark"></span>
+        </div>
+        <div class="bar-actions">
+          <button class="btn btn-warning" onclick="openEditStudent()">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            Edit
+          </button>
+          <button class="btn btn-danger" onclick="deleteStudent()">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>
+            Delete
+          </button>
+        </div>
       </div>
     </div>
 
-    <!-- Stats -->
     <div class="stats-row" id="statsRow" style="display:none">
       <div class="stat-card">
         <div class="stat-dot" style="background:var(--accent)"></div>
@@ -599,7 +737,7 @@
       <div class="stat-card">
         <div class="stat-dot" style="background:var(--success)"></div>
         <div class="stat-val" id="statUnits">0</div>
-        <div class="stat-lbl">Total Units</div>
+        <div class="stat-lbl">Units</div>
       </div>
       <div class="stat-card">
         <div class="stat-dot" style="background:var(--warning)"></div>
@@ -608,35 +746,85 @@
       </div>
     </div>
 
-    <!-- Subjects table -->
     <div class="table-wrapper">
       <div class="table-header">
         <h3>Subject Records</h3>
         <span class="subject-count" id="subjCountBadge">0 subjects</span>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Subject</th>
-            <th>Units</th>
-            <th>Grade</th>
-            <th style="text-align:right">Action</th>
-          </tr>
-        </thead>
-        <tbody id="subjectList">
-          <tr>
-            <td colspan="4">
-              <div class="empty-state">
-                <div class="empty-icon">📋</div>
-                <p>Select a student to view their subjects</p>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>Units</th>
+              <th>Grade</th>
+              <th style="text-align:right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="subjectList">
+            <tr>
+              <td colspan="4">
+                <div class="empty-state">
+                  <div class="empty-icon">📋</div>
+                  <p>Select a student to view their subjects</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
   </main>
+</div>
+
+<!-- ─── EDIT STUDENT MODAL ─── -->
+<div class="modal-overlay" id="editStudentModal">
+  <div class="modal">
+    <div class="modal-title">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      Edit Student Info
+    </div>
+    <div class="modal-form-group">
+      <label>Full Name</label>
+      <input type="text" id="editName" placeholder="Full Name">
+    </div>
+    <div class="modal-form-group">
+      <label>Section</label>
+      <input type="text" id="editSection" placeholder="Section">
+    </div>
+    <div class="modal-form-group" style="margin-bottom:20px">
+      <label>Course</label>
+      <input type="text" id="editCourse" placeholder="Course">
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="closeModal('editStudentModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEditStudent()" style="width:auto;flex:1">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── EDIT SUBJECT MODAL ─── -->
+<div class="modal-overlay" id="editSubjectModal">
+  <div class="modal">
+    <div class="modal-title">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      Edit Subject
+    </div>
+    <input type="hidden" id="editSubjectId">
+    <div class="modal-form-group">
+      <label>Subject Name</label>
+      <input type="text" id="editSubjectName" placeholder="Subject Name">
+    </div>
+    <div class="modal-form-group" style="margin-bottom:20px">
+      <label>Units</label>
+      <input type="number" id="editSubjectUnits" placeholder="Units" min="1" max="6">
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="closeModal('editSubjectModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEditSubject()" style="width:auto;flex:1">Save Changes</button>
+    </div>
+  </div>
 </div>
 
 <!-- Toast -->
@@ -647,16 +835,18 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, doc, addDoc, setDoc, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import {
+  getFirestore, collection, doc, addDoc, setDoc, getDocs, deleteDoc, getDoc
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAKTXE50F0O72NPrW4DJB_K9Mkz54saLpY",
-    authDomain: "janicalibuna555.firebaseapp.com",
-    projectId: "janicalibuna555",
-    storageBucket: "janicalibuna555.firebasestorage.app",
-    messagingSenderId: "297095822851",
-    appId: "1:297095822851:web:e608b8e03dc621d7c69836"
-  };
+  apiKey: "AIzaSyAKTXE50F0O72NPrW4DJB_K9Mkz54saLpY",
+  authDomain: "janicalibuna555.firebaseapp.com",
+  projectId: "janicalibuna555",
+  storageBucket: "janicalibuna555.firebasestorage.app",
+  messagingSenderId: "297095822851",
+  appId: "1:297095822851:web:e608b8e03dc621d7c69836"
+};
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -664,6 +854,7 @@ const db = getFirestore(app);
 let currentStudentId = null;
 let currentStudentData = null;
 
+// ── Utils ──
 function showToast(msg, icon = "✓") {
   const t = document.getElementById("toast");
   document.getElementById("toastMsg").textContent = msg;
@@ -690,6 +881,20 @@ function getRemark(gwa) {
   return { text: "Below Average", color: "#f87171", bg: "rgba(248,113,113,0.12)" };
 }
 
+function openModal(id) { document.getElementById(id).classList.add("open"); }
+function closeModal(id) { document.getElementById(id).classList.remove("open"); }
+window.closeModal = closeModal;
+
+// Close modal on overlay click
+document.querySelectorAll(".modal-overlay").forEach(overlay => {
+  overlay.addEventListener("click", e => {
+    if (e.target === overlay) overlay.classList.remove("open");
+  });
+});
+
+
+
+// ── Student bar ──
 function updateStudentBar(data) {
   const bar = document.getElementById("studentBar");
   const statsRow = document.getElementById("statsRow");
@@ -701,6 +906,7 @@ function updateStudentBar(data) {
   document.getElementById("barMeta").textContent = `${data.section} · ${data.course}`;
 }
 
+// ── Load students into dropdown ──
 async function loadStudents() {
   const select = document.getElementById("studentSelect");
   select.innerHTML = '<option value="">— Choose a student —</option>';
@@ -714,6 +920,7 @@ async function loadStudents() {
   });
 }
 
+// ── Select student ──
 async function selectStudent() {
   currentStudentId = document.getElementById("studentSelect").value;
   if (!currentStudentId) {
@@ -730,7 +937,9 @@ async function selectStudent() {
   updateStudentBar(currentStudentData);
   loadSubjects();
 }
+window.selectStudent = selectStudent;
 
+// ── Create student ──
 async function createStudent() {
   const name = document.getElementById("studentName").value.trim();
   const section = document.getElementById("section").value.trim();
@@ -751,8 +960,69 @@ async function createStudent() {
   updateStudentBar(currentStudentData);
   loadSubjects();
   showToast(`Student "${name}" created!`, "🎓");
-}
 
+  // Close sidebar on mobile after creating
+  if (window.innerWidth <= 820) {
+    document.getElementById("sidebar").classList.remove("open");
+  }
+}
+window.createStudent = createStudent;
+
+// ── Delete student ──
+window.deleteStudent = async function() {
+  if (!currentStudentId || !currentStudentData) return;
+  if (!confirm(`Delete "${currentStudentData.name}" and ALL their subjects? This cannot be undone.`)) return;
+
+  // Delete all subjects first
+  const subjectsSnap = await getDocs(collection(db, "students", currentStudentId, "subjects"));
+  const delPromises = [];
+  subjectsSnap.forEach(s => delPromises.push(deleteDoc(s.ref)));
+  await Promise.all(delPromises);
+
+  // Delete student doc
+  await deleteDoc(doc(db, "students", currentStudentId));
+
+  const deletedName = currentStudentData.name;
+  currentStudentId = null;
+  currentStudentData = null;
+
+  await loadStudents();
+  updateStudentBar(null);
+  document.getElementById("subjectList").innerHTML = `<tr><td colspan="4"><div class="empty-state"><div class="empty-icon">📋</div><p>Select a student to view their subjects</p></div></td></tr>`;
+  document.getElementById("gwa").textContent = "—";
+  document.getElementById("gwaRemark").textContent = "";
+  document.getElementById("subjCountBadge").textContent = "0 subjects";
+  document.getElementById("statSubjects").textContent = "0";
+  document.getElementById("statUnits").textContent = "0";
+  document.getElementById("statGraded").textContent = "0";
+  showToast(`"${deletedName}" deleted`, "🗑️");
+};
+
+// ── Edit student modal ──
+window.openEditStudent = function() {
+  if (!currentStudentData) return;
+  document.getElementById("editName").value = currentStudentData.name || "";
+  document.getElementById("editSection").value = currentStudentData.section || "";
+  document.getElementById("editCourse").value = currentStudentData.course || "";
+  openModal("editStudentModal");
+};
+
+window.saveEditStudent = async function() {
+  const name = document.getElementById("editName").value.trim();
+  const section = document.getElementById("editSection").value.trim();
+  const course = document.getElementById("editCourse").value.trim();
+  if (!name || !section || !course) { showToast("Fill all fields", "⚠️"); return; }
+
+  await setDoc(doc(db, "students", currentStudentId), { name, section, course }, { merge: true });
+  currentStudentData = { ...currentStudentData, name, section, course };
+  updateStudentBar(currentStudentData);
+  await loadStudents();
+  document.getElementById("studentSelect").value = currentStudentId;
+  closeModal("editStudentModal");
+  showToast("Student info updated!", "✏️");
+};
+
+// ── Add subject ──
 async function addSubject() {
   if (!currentStudentId) { showToast("Select or create a student first", "⚠️"); return; }
   const subject = document.getElementById("subject").value.trim();
@@ -766,8 +1036,14 @@ async function addSubject() {
   document.getElementById("units").value = "";
   loadSubjects();
   showToast(`"${subject}" added`, "📘");
-}
 
+  if (window.innerWidth <= 820) {
+    document.getElementById("sidebar").classList.remove("open");
+  }
+}
+window.addSubject = addSubject;
+
+// ── Load subjects ──
 async function loadSubjects() {
   const tbody = document.getElementById("subjectList");
   tbody.innerHTML = "";
@@ -789,7 +1065,6 @@ async function loadSubjects() {
     rows.push({ id: docSnap.id, ...d });
   });
 
-  // Update stats
   document.getElementById("statSubjects").textContent = rows.length;
   document.getElementById("statUnits").textContent = rows.reduce((s, r) => s + r.units, 0);
   document.getElementById("statGraded").textContent = graded;
@@ -818,17 +1093,24 @@ async function loadSubjects() {
         </div>
       </td>
       <td class="td-action">
-        <button class="btn btn-danger" onclick="deleteSubject('${data.id}')">
-          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
-          Remove
-        </button>
+        <div class="td-action-inner">
+          <button class="btn btn-warning" onclick="openEditSubject('${data.id}', '${data.subject.replace(/'/g,"\\'")}', ${data.units})">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            Edit
+          </button>
+          <button class="btn btn-danger" onclick="deleteSubject('${data.id}')">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>
+            Del
+          </button>
+        </div>
       </td>
     `;
     tbody.appendChild(tr);
   });
 
   const gwa = totalUnits > 0 ? totalWeighted / totalUnits : 0;
-  const gwaStr = totalUnits > 0 ? gwa.toFixed(2) : "—";
+  // 1 decimal point
+  const gwaStr = totalUnits > 0 ? gwa.toFixed(1) : "—";
   document.getElementById("gwa").textContent = gwaStr;
 
   const remark = getRemark(gwaStr);
@@ -838,35 +1120,49 @@ async function loadSubjects() {
   remarkEl.style.color = remark.color;
 
   if (totalUnits > 0) {
-    const studentRef = doc(db, "students", currentStudentId);
-    await setDoc(studentRef, { gwa: gwaStr }, { merge: true });
+    await setDoc(doc(db, "students", currentStudentId), { gwa: gwaStr }, { merge: true });
   }
 }
 
-async function updateGrade(subjectId, value) {
+// ── Update grade ──
+window.updateGrade = async function(subjectId, value) {
   if (!currentStudentId) return;
   const grade = parseFloat(value);
   if (isNaN(grade) || grade < 1 || grade > 5) { showToast("Grade must be between 1.0 and 5.0", "⚠️"); return; }
   const subjectRef = doc(db, "students", currentStudentId, "subjects", subjectId);
   await setDoc(subjectRef, { grade }, { merge: true });
   loadSubjects();
-}
+  showToast("Grade updated", "✅");
+};
 
-async function deleteSubject(subjectId) {
+// ── Delete subject ──
+window.deleteSubject = async function(subjectId) {
   if (!currentStudentId) return;
   if (!confirm("Remove this subject?")) return;
-  const subjectRef = doc(db, "students", currentStudentId, "subjects", subjectId);
-  await deleteDoc(subjectRef);
+  await deleteDoc(doc(db, "students", currentStudentId, "subjects", subjectId));
   loadSubjects();
   showToast("Subject removed", "🗑️");
-}
+};
 
-// Expose globals
-window.selectStudent = selectStudent;
-window.createStudent = createStudent;
-window.addSubject = addSubject;
-window.updateGrade = updateGrade;
-window.deleteSubject = deleteSubject;
+// ── Edit subject modal ──
+window.openEditSubject = function(id, name, units) {
+  document.getElementById("editSubjectId").value = id;
+  document.getElementById("editSubjectName").value = name;
+  document.getElementById("editSubjectUnits").value = units;
+  openModal("editSubjectModal");
+};
+
+window.saveEditSubject = async function() {
+  const id = document.getElementById("editSubjectId").value;
+  const name = document.getElementById("editSubjectName").value.trim();
+  const units = parseFloat(document.getElementById("editSubjectUnits").value);
+  if (!name || !units) { showToast("Fill all fields", "⚠️"); return; }
+  const subjectRef = doc(db, "students", currentStudentId, "subjects", id);
+  await setDoc(subjectRef, { subject: name, units }, { merge: true });
+  closeModal("editSubjectModal");
+  loadSubjects();
+  showToast("Subject updated!", "✏️");
+};
 
 loadStudents();
 </script>
